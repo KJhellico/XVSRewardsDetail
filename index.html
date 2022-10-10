@@ -162,13 +162,9 @@
                 sumTotal += totalReward;
                 appendRow(tokenNames[t.token.toLowerCase()], formatNum(supplyReward), formatNum(borrowReward), formatNum(totalReward));
             }
+            appendRow('Accrued', '', '', formatNum(accrued));
+            sumTotal += Number(accrued);
             appendRow('Total', formatNum(sumSupply), formatNum(sumBorrow), formatNum(sumTotal));
-            
-            const pAccrued = document.createElement('p');
-            pAccrued.innerText = 'Accrued XVS: ' + formatNum(accrued);
-            const detailsDiv = document.querySelector('div.details');
-            detailsDiv.append(pAccrued);
-            
         }
     </script>
 </body>
