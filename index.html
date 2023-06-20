@@ -147,7 +147,7 @@
             try {
                 const lensContract = new web3.eth.Contract(lensAbi, lensAddr);
                 let res = await lensContract.methods.pendingVenus(walletAddr).call();
-                accrued = res.accrued;
+                accrued = Number(res.accrued);
                 pendingList = res.tokens;
                 
             } catch (err) {}
@@ -166,7 +166,7 @@
                 appendRow(tokenNames[t.token.toLowerCase()], formatNum(supplyReward), formatNum(borrowReward), formatNum(totalReward));
             }
             appendRow('Accrued', '', '', formatNum(accrued));
-            sumTotal += Number(accrued);
+            sumTotal += accrued;
             appendRow('Total', formatNum(sumSupply), formatNum(sumBorrow), formatNum(sumTotal));
         }
     </script>
