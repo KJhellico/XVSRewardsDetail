@@ -109,7 +109,7 @@
             const provider = new Web3.providers.HttpProvider('https://bsc-dataseed.binance.org');
             const web3 = new Web3(provider);
             const decimals = 10**18;
-            const lensAbi = [{'inputs':[{'internalType':'address','name':'holder','type':'address'}],'name':'pendingVenus','outputs':[{'internalType':'uint256','name':'accrued','type':'uint256'},{'components':[{'internalType':'contract VToken','name':'token','type':'address'},{'internalType':'uint256','name':'supplyReward','type':'uint256'},{'internalType':'uint256','name':'borrowReward','type':'uint256'}],'internalType':'struct VenusLens.TokenRewardState[]','name':'tokens','type':'tuple[]'}],'stateMutability':'view','type':'function'}];
+            const lensAbi = [{'inputs':[{'internalType':'address','name':'holder','type':'address'}],'name':'pendingVenus','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'address','name':'holder','type':'address'}],'name':'pendingVenusDetails','outputs':[{'components':[{'internalType':'uint256','name':'accruedReward','type':'uint256'},{'components':[{'internalType':'contract IVToken','name':'token','type':'address'},{'internalType':'uint256','name':'supplyReward','type':'uint256'},{'internalType':'uint256','name':'borrowReward','type':'uint256'}],'internalType':'struct VenusLens.MarketReward[]','name':'marketRewards','type':'tuple[]'}],'internalType':'struct VenusLens.TotalRewards','name':'','type':'tuple'}],'stateMutability':'view','type':'function'}];
             const tokenNames = {
                 '0x2ff3d0f6990a40261c66e1ff2017acbc282eb6d0': 'SXP',
                 '0x151b1e2635a717bcdc836ecd6fbb62b674fe3e1d': 'XVS',
@@ -142,13 +142,13 @@
             };
             let accrued = 0;
             let pendingList = [];
-            const lensAddr = '0xa4EA3CE8b99050AC40CF722dE5160a39d5252A36';
+            const lensAddr = '0xEa702aA8038fFA28Fc79DA5750510F7ae109BB2C';
             const walletAddr = document.getElementById('walletAddr').value;
             try {
                 const lensContract = new web3.eth.Contract(lensAbi, lensAddr);
-                let res = await lensContract.methods.pendingVenus(walletAddr).call();
-                accrued = Number(res.accrued);
-                pendingList = res.tokens;
+                let res = await lensContract.methods.pendingVenusDetails(walletAddr).call();
+                accrued = Number(res.accruedReward);
+                pendingList = res.marketRewards;
                 
             } catch (err) {}
 
